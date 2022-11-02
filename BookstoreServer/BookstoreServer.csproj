@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Protobuf Include="Protos\bookstore.proto" GrpcServices="Server" />
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
   </ItemGroup>
 
   <ItemGroup>
