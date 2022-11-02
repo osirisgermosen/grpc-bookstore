@@ -4,7 +4,7 @@ option csharp_namespace = "Bookstore";
 
 service Inventory {
 	rpc GetBookById(BookByIdRequest) returns (BookResponse);
-	rpc GetBookList(BookListRequest) returns(BookListRequest);
+	rpc GetBookList(BookListRequest) returns(BookListResponse);
 }
 
 message BookResponse {
