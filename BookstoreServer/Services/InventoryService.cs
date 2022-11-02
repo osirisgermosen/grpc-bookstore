@@ -69,6 +69,8 @@ namespace BookstoreServer.Services
 
         public override Task<BookResponse> AddBook(BookRequest request, ServerCallContext context)
         {
+            _logger.LogInformation("Received request to: AddBook");
+
             BookResponse bookResponse = new BookResponse();
 
             using (var db = new InventoyContext())
@@ -80,8 +82,7 @@ namespace BookstoreServer.Services
                     Isbn = request.Book.Isbn,
                     Year = request.Book.Year,
                 };
-             
-             
+                          
                 db.Books.Add(book);
                 db.SaveChanges();
 
