@@ -5,6 +5,7 @@ option csharp_namespace = "Bookstore";
 service Inventory {
 	rpc GetBookById(BookByIdRequest) returns (BookResponse);
 	rpc GetBookList(BookListRequest) returns(BookListResponse);
+	rpc AddBook(BookRequest) returns (BookResponse);
 }
 
 message BookResponse {
@@ -13,6 +14,10 @@ message BookResponse {
 	string author = 3;
 	string isbn = 4;
 	int32 year = 5;
+}
+
+message BookRequest {
+	BookResponse book = 1;
 }
 
 message BookListResponse {

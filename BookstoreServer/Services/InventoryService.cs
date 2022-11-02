@@ -66,5 +66,33 @@ namespace BookstoreServer.Services
 
             return Task.FromResult(response);
         }
+
+        public override Task<BookResponse> AddBook(BookRequest request, ServerCallContext context)
+        {
+            BookResponse bookResponse = new BookResponse();
+
+            using (var db = new InventoyContext())
+            {
+                var book = new Book()
+                {
+                    Title = request.Book.Title,
+                    Author = request.Book.Author,
+                    Isbn = request.Book.Isbn,
+                    Year = request.Book.Year,
+                };
+             
+             
+                db.Books.Add(book);
+                db.SaveChanges();
+
+                bookResponse.BookId = book.Id;
+                bookResponse.Title = book.Title;
+                bookResponse.Author = book.Author;
+                bookResponse.Isbn = book.Isbn;
+                bookResponse.Year = book.Year;
+            }
+
+           return Task.FromResult(bookResponse);
+        }
     }
 }
