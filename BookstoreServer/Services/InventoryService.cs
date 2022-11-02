@@ -1,4 +1,6 @@
 ﻿using Bookstore;
+using BookstoreServer.Data;
+using BookstoreServer.Models;
 using Grpc.Core;
 
 namespace BookstoreServer.Services
@@ -16,36 +18,53 @@ namespace BookstoreServer.Services
         {
             _logger.LogInformation("Received request to: GetBookById");
 
-            BookResponse book = new BookResponse();
-            book.BookId = 1;
-            book.Title = "Just C#";
-            book.Author = "Microsoft Learn";
-            book.Isbn = "2-859595859-859";
-            book.Year = 2022;
+            BookResponse response = new BookResponse();
 
-            return Task.FromResult(book);
+            using (var db = new InventoyContext())
+            {
+                var book = db.Books
+                    .Where(b => b.Id == request.BookId).FirstOrDefault();
+
+                if (book != null)
+                {
+                    response.BookId = book.Id;
+                    response.Title = book.Title;
+                    response.Author = book.Author;
+                    response.Isbn = book.Isbn;
+                    response.Year = book.Year;
+                }                
+            }
+
+            return Task.FromResult(response);
         }
 
         public override Task<BookListResponse> GetBookList(BookListRequest request, ServerCallContext context)
         {
             _logger.LogInformation("Received request to: GetBookList");
 
-            BookListResponse bookList = new BookListResponse();
-            bookList.Books.Add(new BookResponse
-            {
-                Title = "Just C#",
-                Author = "Microsoft Learn",
-                Year = 2022
-            });
+            BookListResponse response = new BookListResponse();
 
-            bookList.Books.Add(new BookResponse
+            using (var db = new InventoyContext())
             {
-                Title = "EntityFramework.Core C#",
-                Author = "Microsoft Learn",
-                Year = 2021
-            });
+                var bookList = db.Books.ToList();
 
-            return Task.FromResult(bookList);
+                if (bookList != null)
+                {
+                    foreach (var book in bookList)
+                    {
+                        response.Books.Add(new BookResponse()
+                        {
+                            BookId = book.Id,
+                            Title = book.Title,
+                            Author = book.Author,
+                            Isbn = book.Isbn,
+                            Year = book.Year
+                        });
+                    }
+                }
+            }
+
+            return Task.FromResult(response);
         }
     }
 }
