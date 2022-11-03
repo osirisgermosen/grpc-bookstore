@@ -6,6 +6,7 @@ service Inventory {
 	rpc GetBookById(BookByIdRequest) returns (BookResponse);
 	rpc GetBookList(BookListRequest) returns(BookListResponse);
 	rpc AddBook(BookRequest) returns (BookResponse);
+	rpc EditBook(BookRequest) returns (BookResponse);
 }
 
 message BookResponse {
