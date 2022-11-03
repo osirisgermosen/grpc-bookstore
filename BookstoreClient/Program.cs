@@ -6,33 +6,12 @@ var channel = GrpcChannel.ForAddress("https://localhost:7231");
 var client = new Inventory.InventoryClient(channel);
 
 #region Add Book
-//var book = await client.AddBookAsync(new BookRequest()
-//{
-//    Book = new BookResponse()
-//    {
-//        Title = "Just JavaScript",
-//        Author = "Mozilla",
-//        Isbn = "21-8898982395-2",
-//        Year = 2022
-//    }
-//});
-
-//Console.WriteLine($"ID: {book.BookId}");
-//Console.WriteLine($"Title: {book.Title}");
-//Console.WriteLine($"Author: {book.Author}");
-//Console.WriteLine($"ISBN: {book.Isbn}");
-//Console.WriteLine($"Year: {book.Year}");
-//Console.ReadKey();
-#endregion
-
-#region Update Book
-var book = await client.EditBookAsync(new BookRequest()
+var book = await client.AddBookAsync(new BookRequest()
 {
     Book = new BookResponse()
     {
-        BookId = 1,
-        Title = "Just SQL Server 2019",
-        Author = "Microsoft",
+        Title = "Just JavaScript",
+        Author = "Mozilla",
         Isbn = "21-8898982395-2",
         Year = 2022
     }

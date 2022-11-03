@@ -9,7 +9,7 @@ namespace BookstoreServer.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=GERMSYS-PC;Database=Bookstore;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"Server=<ServerName>;Database=Bookstore;Trusted_Connection=True;");
         }
     }
 }
