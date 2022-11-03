@@ -95,5 +95,35 @@ namespace BookstoreServer.Services
 
            return Task.FromResult(bookResponse);
         }
+
+        public override Task<BookResponse> EditBook(BookRequest request, ServerCallContext context)
+        {
+            _logger.LogInformation("Received request to: EditBook");
+
+            BookResponse bookResponse = new BookResponse();
+
+            using (var db = new InventoyContext())
+            {
+                var book = new Book()
+                {
+                    Id = request.Book.BookId,
+                    Title = request.Book.Title,
+                    Author = request.Book.Author,
+                    Isbn = request.Book.Isbn,
+                    Year = request.Book.Year,
+                };
+
+                db.Books.Update(book);
+                db.SaveChanges();
+
+                bookResponse.BookId = book.Id;
+                bookResponse.Title = book.Title;
+                bookResponse.Author = book.Author;
+                bookResponse.Isbn = book.Isbn;
+                bookResponse.Year = book.Year;
+            }
+
+            return Task.FromResult(bookResponse);
+        }
     }
 }
